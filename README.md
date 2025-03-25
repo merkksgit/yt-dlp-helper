@@ -1,5 +1,9 @@
 # yt-dlp-helper
 
+![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
+![Bash](https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=fff)
+![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)
+
 A feature-rich script for downloading videos and audio from YouTube using yt-dlp.
 
 ## Features
