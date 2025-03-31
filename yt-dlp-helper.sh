@@ -3,7 +3,9 @@
 # Check if yt-dlp is installed
 if ! command -v yt-dlp &> /dev/null; then
     echo "Error: yt-dlp is not installed"
-    echo "Please install it first with: sudo apt install yt-dlp"
+    echo "Please install it with either:"
+    echo "  - sudo apt install yt-dlp"
+    echo "  - pip install -U yt-dlp"
     exit 1
 fi
 
@@ -83,6 +85,36 @@ print_completion() {
     echo "Download completed successfully!"
     echo "Files have been saved to: $output_dir"
     echo "===================================="
+    echo
+    read -r -p "Press Enter to continue..."
+}
+
+# Function to update yt-dlp based on installation method
+update_ytdlp() {
+    echo
+    echo "Updating yt-dlp..."
+    echo
+    
+    # Check if yt-dlp is installed via pip
+    if pip list 2>/dev/null | grep -q "yt-dlp"; then
+        echo "yt-dlp seems to be installed via pip. Updating with pip..."
+        pip install -U yt-dlp
+        update_status=$?
+    else
+        # Try system update method
+        echo "Attempting system update method..."
+        sudo yt-dlp -U
+        update_status=$?
+    fi
+    
+    if [ $update_status -eq 0 ]; then
+        echo "yt-dlp updated successfully!"
+    else
+        echo "Update failed. Please try manually updating yt-dlp."
+        echo "For pip: pip install -U yt-dlp"
+        echo "For system: sudo yt-dlp -U"
+    fi
+    
     echo
     read -r -p "Press Enter to continue..."
 }
@@ -170,11 +202,7 @@ while true; do
             ;;
             
         7)  # Update yt-dlp
-            echo
-            echo "Updating yt-dlp..."
-            sudo yt-dlp -U
-            echo
-            read -r -p "Press Enter to continue..."
+            update_ytdlp
             ;;
 
         8)  # Exit
